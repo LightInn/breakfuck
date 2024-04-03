@@ -18,7 +18,7 @@ fn main() {
 
 
     // let last stack index array
-    let mut stack_array = [0u8; MEMORY_SIZE];
+    let _stack_array = [0u8; MEMORY_SIZE];
 
 
     // let output
@@ -38,8 +38,6 @@ fn main() {
             '.' => output.push(memory[pm] as char),
             ',' => memory[pm] = get_input(),
             '[' => {
-
-
                 if memory[pm] == 0 {
                     // Sauter à l'instruction après le ]
                     let mut loop_counter = 1;
@@ -52,12 +50,8 @@ fn main() {
                         }
                     }
                 }
-
-
-
             }
             ']' => {
-
                 if memory[pm] != 0 {
                     // Sauter en arrière à l'instruction après le [
                     let mut loop_counter = 1;
@@ -70,8 +64,6 @@ fn main() {
                         }
                     }
                 }
-
-
             }
             _ => {}
         }
@@ -79,8 +71,7 @@ fn main() {
     }
 
 
-    send_output( output);
-
+    send_output(output);
 }
 
 fn send_output(output: String) {
