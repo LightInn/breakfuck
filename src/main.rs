@@ -32,7 +32,9 @@ fn main() {
     while pi < HELLO.len() {
 
         match HELLO.chars().nth(pi).unwrap() {
-            '>' =>
+            '>' => pm += 1,
+            '<' => pm -= 1,
+
         }
 
     }
