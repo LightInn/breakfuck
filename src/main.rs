@@ -1,5 +1,5 @@
 const HELLO: &str = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.";
-const MEMORY_SIZE: usize = 30000;
+const MEMORY_SIZE: usize = 10;
 
 // Brainfuck interpreter
 fn main() {
@@ -30,31 +30,66 @@ fn main() {
 
     // tant qu'on a pas finir de lire les instruction
     while pi < HELLO.len() {
-
         match HELLO.chars().nth(pi).unwrap() {
             '>' => pm += 1,
             '<' => pm -= 1,
+            '+' => memory[pm] += 1,
+            '-' => memory[pm] -= 1,
+            '.' => output.push(memory[pm] as char),
+            ',' => memory[pm] = get_input(),
+            '[' => {
 
+
+                if memory[pm] == 0 {
+                    // Sauter à l'instruction après le ]
+                    let mut loop_counter = 1;
+                    while loop_counter > 0 {
+                        pi += 1;
+                        match HELLO.chars().nth(pi).unwrap() {
+                            '[' => loop_counter += 1,
+                            ']' => loop_counter -= 1,
+                            _ => {}
+                        }
+                    }
+                }
+
+
+
+            }
+            ']' => {
+
+                if memory[pm] != 0 {
+                    // Sauter en arrière à l'instruction après le [
+                    let mut loop_counter = 1;
+                    while loop_counter > 0 {
+                        pi -= 1;
+                        match HELLO.chars().nth(pi).unwrap() {
+                            ']' => loop_counter += 1,
+                            '[' => loop_counter -= 1,
+                            _ => {}
+                        }
+                    }
+                }
+
+
+            }
+            _ => {}
         }
-
+        pi += 1;
     }
 
 
+    send_output( output);
 
+}
 
-
-    println!("Hello, world!");
+fn send_output(output: String) {
+    println!("{}", output)
 }
 
 
-fn interpret() {
-    let end: bool = false;
-
-    while !end {
-
-        match  {  }
-
-
-
-    }
+fn get_input() -> u8 {
+    let mut input = String::new();
+    std::io::stdin().read_line(&mut input).unwrap();
+    input.as_bytes()[0]
 }
